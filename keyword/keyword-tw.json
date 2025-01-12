@@ -1,0 +1,13 @@
+{
+    "messages":
+    [
+        {
+            "keyword" : "呱",
+            "botmessage": "呱！"
+        },
+        {
+            "keyword" : "呱 x10",
+            "botmessage": "呱呱呱呱呱呱呱呱呱呱"
+        }
+    ]
+}

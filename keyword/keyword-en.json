@@ -1,0 +1,9 @@
+{
+    "messages":
+    [
+        {
+            "keyword" : "quack",
+            "botmessage": "quack !"
+        }
+    ]
+}
