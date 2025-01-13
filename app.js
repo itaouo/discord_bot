@@ -5,7 +5,11 @@ require('dotenv').config()
 
 const LANGUAGE = process.env.LANGUAGE;
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
+const PORT = process.env.PORT; // || 3000
+
 const { messages } = require(`./keyword/keyword-${LANGUAGE}.json`);
+const loadSlashCommands = require('./slash_command.js');
+const fetchData = require('./command/weather.js'); 
 
 const client = new Client({
     intents:
@@ -20,22 +24,34 @@ const client = new Client({
 
 client.login(TOKEN);
 
-client.on('ready', () => { // bot is ready
+client.on('ready', () => {
     client.user.setPresence({ activities: [{ name: '耍廢' }], status: 'online' });
-    console.log('Bot is online.')
+  console.log('Bot is online.');
+
+  loadSlashCommands();
 });
 
-client.on('messageCreate', async msg => { // client send message in chat
-    if (msg.author.bot)
-        return;
+client.on('messageCreate', async msg => {
+  if (msg.author.bot) return;
 
     let reply = messages.filter(item => msg.content.includes(item.keyword));
     if (reply.length > 0) {
         msg.reply(reply[0].botmessage);
     }
+  console.log(`Bot reply.`);
 });
 
-const PORT = process.env.PORT; // || 3000
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isCommand()) return;
+
+  const {commandName, options } = interaction;
+  if (commandName === 'weather_forecast') {
+    await interaction.reply('weather');
+  } else {
+    await interaction.reply('Command not recognized.');
+  }
+});
+
 const app = express();
 
 app.get('/', (req, res) => {
