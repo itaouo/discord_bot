@@ -9,7 +9,7 @@ const PORT = process.env.PORT|| 3000;
 
 const { messages } = require(`./keyword/keyword-${LANGUAGE}.json`);
 const loadSlashCommands = require('./slash_command.js');
-const fetchTomorrowWeather = require('./command/weather.js'); 
+const [fetchTomorrowWeather, addWeatherCity, deleteWeatherCity, checkWeatherCity] = require('./command/weather.js'); 
 
 const client = new Client({
 intents:
@@ -45,31 +45,39 @@ client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return;
 
   const {commandName, options } = interaction;
-  if (commandName === 'weather_forecast') {
+  if (commandName === 'weather') {
     await interaction.reply(await fetchTomorrowWeather());
+  } else if (commandName === 'subscribe_weather'){
+    await interaction.reply(await addWeatherCity(options.getString('spot')));
+  } else if (commandName === 'unsubscribe_weather'){
+    await interaction.reply(await deleteWeatherCity(options.getString('spot')));
+  } else if (commandName === 'weather_spot'){
+    await interaction.reply(await checkWeatherCity());
+  } else if (commandName === 'quack'){
+    await interaction.reply('呱');
   } else {
     await interaction.reply('Command not recognized.');
   }
 });
 
-const app = express();
+// const app = express();
 
-app.get('/', (req, res) => {
-	console.log("uptimeRobot enter");
-	res.send("DiscordBot");
-});
+// app.get('/', (req, res) => {
+// 	console.log("uptimeRobot enter");
+// 	res.send("DiscordBot");
+// });
 
-app.get('/healthz', (req, res) => {
-	res.status(200).send('OK');
-});
+// app.get('/healthz', (req, res) => {
+// 	res.status(200).send('OK');
+// });
 
-app.listen(PORT, () => {
-	console.log("Start Server");
-	setInterval(() => {
-		let mUsage = process.memoryUsage();
-        let memorySum = mUsage.rss + mUsage.heapUsed + mUsage.heapTotal + mUsage.external + mUsage.arrayBuffers;
-		let memoryMB = (memorySum/(1024*1024)).toFixed(2) + " MB";
-		console.log(`Live...${memoryMB} ` + new Date());
-		gc();
-	}, 60000);
-});
+// app.listen(PORT, () => {
+// 	console.log("Start Server");
+// 	setInterval(() => {
+// 		let mUsage = process.memoryUsage();
+//         let memorySum = mUsage.rss + mUsage.heapUsed + mUsage.heapTotal + mUsage.external + mUsage.arrayBuffers;
+// 		let memoryMB = (memorySum/(1024*1024)).toFixed(2) + " MB";
+// 		console.log(`Live...${memoryMB} ` + new Date());
+// 		gc();
+// 	}, 60000);
+// });

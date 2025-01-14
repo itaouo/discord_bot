@@ -7,21 +7,41 @@ const GUILD_ID = process.env.GUILD_ID;
 
 const commands = [
   {
-    name: 'weather_forecast',
+    name: 'weather',
     description: '明日天氣預報',
   },
-  // {
-  //   name: 'weather_forecast',
-  //   description: '明日天氣預報',
-  // options: [
-  // {
-  //   name: 'ml',
-  //   type: 4,
-  //   description: '輸入喝的水量',
-  //   required: true,
-  // },
-  // ]
-  // },
+  {
+    name: 'subscribe_weather',
+    description: '新增天氣預報地點',
+    options: [
+      {
+        name: 'spot',
+        type: 3,
+        description: '地點',
+        required: true,
+      },
+    ]
+  },
+  {
+    name: 'unsubscribe_weather',
+    description: '取消天氣預報地點',
+    options: [
+      {
+        name: 'spot',
+        type: 3,
+        description: '地點',
+        required: true,
+      },
+    ]
+  },
+  {
+    name: 'weather_spot',
+    description: '查看所有天氣預報地點',
+  },
+  {
+    name: 'quack',
+    description: '呱',
+  },
 ];
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
