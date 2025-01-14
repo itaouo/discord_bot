@@ -71,10 +71,12 @@ const isLocationInWeatherAPI = async (city) => {
   try {
     const response = await axios.get(WEATHER_URL)
     const locations = response.data.records.location
-    locations.forEach((location) => {
-      if(city === location){ return true } 
-    })
-  } catch (error) {}
+    for (let location of locations) {
+      if(city === location.locationName) { return true } 
+    }
+  } catch (error) {
+    console.log(error.message)
+  }
   return false
 }
 
