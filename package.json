@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node app.js",
-    "test": "node weather.js"
+    "test": "node discord-bot.js"
   },
   "dependencies": {
     "axios": "^1.7.9",

@@ -1,83 +1,26 @@
-const { Client, GatewayIntentBits } = require('discord.js');
 const express = require("express");
+const app = express();
 
-require('dotenv').config()
+const PORT = process.env.PORT || 3000;
 
-const LANGUAGE = process.env.LANGUAGE;
-const TOKEN = process.env.DISCORD_BOT_TOKEN;
-const PORT = process.env.PORT|| 3000;
-
-const { messages } = require(`./keyword/keyword-${LANGUAGE}.json`);
-const loadSlashCommands = require('./slash_command.js');
-const [fetchTomorrowWeather, addWeatherCity, deleteWeatherCity, checkWeatherCity] = require('./command/weather.js'); 
-
-const client = new Client({
-intents:
-  [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildScheduledEvents,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMessageReactions
-  ]
+app.get('/', (req, res) => {
+	console.log("UptimeRobot enter");
+	res.send("DiscordBot");
 });
 
-client.login(TOKEN);
-
-client.on('ready', () => {
-  client.user.setPresence({ activities: [{ name: '耍廢' }], status: 'online' });
-  console.log('Bot is online.');
-
-  loadSlashCommands();
+app.get('/healthz', (req, res) => {
+	res.status(200).send('OK');
 });
 
-client.on('messageCreate', async msg => {
-  if (msg.author.bot) return;
-
-  let reply = messages.filter(item => msg.content.includes(item.keyword));
-  if (reply.length > 0) {
-    msg.reply(reply[0].botmessage);
-  }
-  console.log(`Bot reply.`);
+app.listen(PORT, () => {
+	console.log("Start Server");
+	setInterval(() => {
+		let mUsage = process.memoryUsage();
+        let memorySum = mUsage.rss + mUsage.heapUsed + mUsage.heapTotal + mUsage.external + mUsage.arrayBuffers;
+		let memoryMB = (memorySum/(1024*1024)).toFixed(2) + " MB";
+		console.log(`Live...${memoryMB} ` + new Date());
+		gc();
+	}, 60000);
 });
 
-client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
-
-  const {commandName, options } = interaction;
-  if (commandName === 'weather') {
-    await interaction.reply(await fetchTomorrowWeather());
-  } else if (commandName === 'subscribe_weather'){
-    await interaction.reply(await addWeatherCity(options.getString('spot')));
-  } else if (commandName === 'unsubscribe_weather'){
-    await interaction.reply(await deleteWeatherCity(options.getString('spot')));
-  } else if (commandName === 'weather_spot'){
-    await interaction.reply(await checkWeatherCity());
-  } else if (commandName === 'quack'){
-    await interaction.reply('呱');
-  } else {
-    await interaction.reply('Command not recognized.');
-  }
-});
-
-// const app = express();
-
-// app.get('/', (req, res) => {
-// 	console.log("uptimeRobot enter");
-// 	res.send("DiscordBot");
-// });
-
-// app.get('/healthz', (req, res) => {
-// 	res.status(200).send('OK');
-// });
-
-// app.listen(PORT, () => {
-// 	console.log("Start Server");
-// 	setInterval(() => {
-// 		let mUsage = process.memoryUsage();
-//         let memorySum = mUsage.rss + mUsage.heapUsed + mUsage.heapTotal + mUsage.external + mUsage.arrayBuffers;
-// 		let memoryMB = (memorySum/(1024*1024)).toFixed(2) + " MB";
-// 		console.log(`Live...${memoryMB} ` + new Date());
-// 		gc();
-// 	}, 60000);
-// });
+require('./discord-bot.js')
