@@ -2,11 +2,12 @@ const { Client, GatewayIntentBits } = require('discord.js');
 
 require('dotenv').config()
 const LANGUAGE = process.env.LANGUAGE;
-const TOKEN = process.env.DISCORD_BOT_TOKEN; 
+const TOKEN = process.env.DISCORD_BOT_TOKEN;
+const COMMAND_FOLDER_PATH = process.env.COMMAND_FOLDER_PATH;
 
 const { messages } = require(`./keyword/keyword-${LANGUAGE}.json`);
 const loadSlashCommands = require('./slash_command.js');
-const [fetchTomorrowWeather, addWeatherCity, deleteWeatherCity, checkWeatherCity] = require('./command/weather.js'); 
+const [writeFile, readFile, listToString, stringToList, listAllCommands] = require('./command/fileHandler.js'); 
 
 const client = new Client({
 intents:
@@ -21,7 +22,7 @@ intents:
 
 client.login(TOKEN);
 
-client.on('ready', () => {
+client.on('ready', async () => {
   client.user.setPresence({ activities: [{ name: '耍廢' }], status: 'online' });
   console.log('Bot is online.');
 
@@ -39,20 +40,20 @@ client.on('messageCreate', async msg => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
+  if (!interaction.isCommand()) return
+  const { commandName, options } = interaction
+  const commands = await listAllCommands()
+  console.log(commands)
 
-  const {commandName, options } = interaction;
-  if (commandName === 'weather') {
-    await interaction.reply(await fetchTomorrowWeather());
-  } else if (commandName === 'subscribe_weather'){
-    await interaction.reply(await addWeatherCity(options.getString('spot')));
-  } else if (commandName === 'unsubscribe_weather'){
-    await interaction.reply(await deleteWeatherCity(options.getString('spot')));
-  } else if (commandName === 'weather_spot'){
-    await interaction.reply(await checkWeatherCity());
-  } else if (commandName === 'quack'){
-    await interaction.reply('呱');
-  } else {
-    await interaction.reply('Command not recognized.');
-  }
-});
+  commands.forEach(async command => {
+    let filePath = COMMAND_FOLDER_PATH + command
+    console.log(filePath)
+    console.log(require(filePath).slashCommandName)
+
+    if (require(filePath).slashCommandName === commandName) {
+      console.log(filePath)
+      let message = await require(filePath).execute(options)
+      await interaction.reply(message)
+    }
+  })
+})
