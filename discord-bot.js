@@ -35,25 +35,22 @@ client.on('messageCreate', async msg => {
   let reply = messages.filter(item => msg.content.includes(item.keyword));
   if (reply.length > 0) {
     msg.reply(reply[0].botmessage);
+    console.log(`Bot reply.`);
   }
-  console.log(`Bot reply.`);
 });
 
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return
   const { commandName, options } = interaction
   const commands = await listAllCommands()
-  console.log(commands)
 
   commands.forEach(async command => {
     let filePath = COMMAND_FOLDER_PATH + command
-    console.log(filePath)
-    console.log(require(filePath).slashCommandName)
 
     if (require(filePath).slashCommandName === commandName) {
-      console.log(filePath)
       let message = await require(filePath).execute(options)
       await interaction.reply(message)
+      console.log(commandName + "command execute.")
     }
   })
 })

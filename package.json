@@ -8,6 +8,7 @@
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "fs-extra": "^11.2.0"
+    "fs-extra": "^11.2.0",
+    "puppeteer": "^24.1.0"
   }
 }
