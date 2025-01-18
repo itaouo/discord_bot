@@ -1,13 +1,12 @@
-const { Console } = require('console');
 const fs = require('fs-extra')
 const path = require('path')
 
 require('dotenv').config()
-const COMMAND_FOLDER_PATH = process.env.COMMAND_FOLDER_PATH;
+const COMMAND_FOLDER_PATH = process.env.COMMAND_FOLDER_PATH
 
 const writeFile = async (filePath, content) => {
   try {
-    await fs.ensureDir(path.dirname(filePath));
+    await fs.ensureDir(path.dirname(filePath))
     await fs.writeFile(filePath, content, "utf8")
 
   } catch (error) {
@@ -37,14 +36,14 @@ const listToString = (list) => {
 
 const stringToList = (content) => {
   if(content === "") { return [] }
-    return content.split('\n').filter(item => item.trim() !== '');
+    return content.split('\n').filter(item => item.trim() !== '')
 }
 
 const listAllCommands = async () => {
-  if (!await fs.exists(COMMAND_FOLDER_PATH)) { console.error('folder not existed') }
+  if (!await fs.exists(COMMAND_FOLDER_PATH)) { console.error('Folder not existed.') }
 
   const files = await fs.readdir(COMMAND_FOLDER_PATH)
   return files
 }
 
-module.exports = [writeFile, readFile, listToString, stringToList, listAllCommands];
+module.exports = [writeFile, readFile, listToString, stringToList, listAllCommands]

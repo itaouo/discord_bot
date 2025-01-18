@@ -1,7 +1,7 @@
 require('dotenv').config()
 const CAMBRIDGE_URL = process.env.CAMBRIDGE_URL
 
-const cambridgeCrawler = require('./../tools/cambridgeCrawler.js')
+const cambridgeCrawler = require('../tools/cambridge-crawler.js')
 
 const slashCommandName = 'qa_sentences_translate'
 
