@@ -46,6 +46,10 @@ const commands = [
     name: 'qa_words_translate',
     description: '寫出題庫內的單詞和對應的翻譯',
   },
+  {
+    name: 'qa_sentences_translate',
+    description: '寫出題庫內的例句和對應的翻譯',
+  },
 ];
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
