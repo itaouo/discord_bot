@@ -50,7 +50,7 @@ client.on('interactionCreate', async (interaction) => {
     if (require(filePath).slashCommandName === commandName) {
       let message = await require(filePath).execute(options)
       await interaction.reply(message)
-      console.log(commandName + "command execute.")
+      console.log(commandName + " command execute.")
     }
   })
 })
