@@ -1,5 +1,3 @@
-const puppeteer = require('puppeteer')
-
 require('dotenv').config()
 const CAMBRIDGE_URL = process.env.CAMBRIDGE_URL
 

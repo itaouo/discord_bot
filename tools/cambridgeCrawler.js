@@ -1,22 +1,5 @@
 const puppeteer = require('puppeteer');
 
-require('dotenv').config()
-const CAMBRIDGE_URL = process.env.CAMBRIDGE_URL;
-
-const slashCommandName = 'qa_words_translate'
-
-const slashCommand = () => {
-    return {
-        name: 'qa_words_translate',
-        description: '寫出題庫內的例句和對應的翻譯',
-    }
-}
-
-const execute = async (options) => {
-    const word = 'prospective';
-    return await cambridgeCrawler(CAMBRIDGE_URL + word)
-}
-
 const cambridgeCrawler = async (url) => {
     let browser = null
     let page = null
@@ -33,8 +16,7 @@ const cambridgeCrawler = async (url) => {
 
     try {
         await page.evaluate(() => {
-            const word = document.querySelector('span.hw.dhw');
-            return word ? word.innerText.trim() : 'No word found';
+            const word = document.querySelector('span.hw.dhw').innerText.trim()
         });
     } catch (error) {
         console.error("The dictionary doesn't have this word: " + error.message)
@@ -66,7 +48,7 @@ const cambridgeCrawler = async (url) => {
         await browser.close();
         return { wordText, classText, meanText, examplesText }
     } catch (error) {
-        console.error('cambridgeCrawler analysis page failed:', error.message);
+        console.error('cambridgeCrawler analysis page failed:', error.message)
     }
 }
 
