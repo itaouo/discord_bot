@@ -43,12 +43,24 @@ const commands = [
     description: '呱',
   },
   {
+    name: 'word_search',
+    description: '寫出英文單字的解釋和例句',
+    options: [
+      {
+        name: 'word',
+        type: 3,
+        description: '要查詢的單字',
+        required: true,
+      },
+    ]
+  },
+  {
     name: 'qa_words_translate',
-    description: '寫出題庫內的單詞和對應的翻譯',
+    description: '寫出題庫內的所有英文單字和對應的翻譯',
   },
   {
     name: 'qa_sentences_translate',
-    description: '寫出題庫內的例句和對應的翻譯',
+    description: '寫出題庫內的所有單字的例句和翻譯',
   },
 ]
 
