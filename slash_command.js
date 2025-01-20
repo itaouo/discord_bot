@@ -55,6 +55,18 @@ const commands = [
     ]
   },
   {
+    name: 'add_word',
+    description: '新增單字至題庫內',
+    options: [
+        {
+        name: 'word',
+        type: 3,
+        description: '單字',
+        required: true,
+        },
+    ]
+  },
+  {
     name: 'qa_words_translate',
     description: '寫出題庫內的所有英文單字和對應的翻譯',
   },
