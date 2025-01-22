@@ -1,8 +1,7 @@
-require('dotenv').config()
-const WEATHER_URL = process.env.WEATHER_URL
+require('dotenv').config() 
 const ENGLISH_WORDS_SAVE = process.env.ENGLISH_WORDS_SAVE
 
-const [writeFile, readFile, listToString, stringToList, listAllCommands] = require('../tools/file-handler.js')
+const { writeFile, readFile, listToString, stringToList } = require('../tools/file-handler.js')
 
 const slashCommandName = 'add_word'
 

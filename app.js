@@ -19,6 +19,7 @@ app.listen(PORT, () => {
         let memorySum = mUsage.rss + mUsage.heapUsed + mUsage.heapTotal + mUsage.external + mUsage.arrayBuffers
 		let memoryMB = (memorySum/(1024*1024)).toFixed(2) + " MB"
 		console.log(`Live...${memoryMB} ` + new Date())
+		// eslint-disable-next-line no-undef
 		gc()
 	}, 60000)
 })

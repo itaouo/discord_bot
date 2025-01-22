@@ -46,4 +46,4 @@ const listAllCommands = async () => {
   return files
 }
 
-module.exports = [writeFile, readFile, listToString, stringToList, listAllCommands]
+module.exports = { writeFile, readFile, listToString, stringToList, listAllCommands }

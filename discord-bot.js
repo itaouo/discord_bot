@@ -7,7 +7,7 @@ const COMMAND_FOLDER_PATH = process.env.COMMAND_FOLDER_PATH
 
 const { messages } = require(`./keyword/keyword-${LANGUAGE}.json`)
 const loadSlashCommands = require('./slash_command.js')
-const [writeFile, readFile, listToString, stringToList, listAllCommands] = require('./tools/file-handler.js')
+const { listAllCommands } = require('./tools/file-handler.js')
 
 const client = new Client({
 intents:

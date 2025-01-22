@@ -16,7 +16,7 @@ const cambridgeCrawler = async (url) => {
 
     try {
         await page.evaluate(() => {
-            const word = document.querySelector('span.hw.dhw').innerText.trim()
+            document.querySelector('span.hw.dhw').innerText.trim()
         })
     } catch (error) {
         console.error("The dictionary doesn't have this word: " + error.message)
@@ -25,15 +25,15 @@ const cambridgeCrawler = async (url) => {
     
     try {
         const wordText = await page.evaluate(() => {
-            return word = document.querySelector('span.hw.dhw').innerText.trim()
+            return document.querySelector('span.hw.dhw').innerText.trim()
         })
         
         const classText = await page.evaluate(() => {
-            return clazz = document.querySelector('span.pos.dpos').innerText.trim()
+            return document.querySelector('span.pos.dpos').innerText.trim()
         })
 
         const meanText = await page.evaluate(() => {
-            return mean = document.querySelector('span.trans.dtrans.dtrans-se.break-cj').innerText.trim()
+            return document.querySelector('span.trans.dtrans.dtrans-se.break-cj').innerText.trim()
         })
 
         const examplesText = await page.evaluate(() => {

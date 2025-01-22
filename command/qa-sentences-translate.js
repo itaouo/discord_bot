@@ -14,7 +14,7 @@ const slashCommand = () => {
 
 const execute = async (options) => {
     const word = 'prospective'
-    const { wordText, classText, meanText, examplesText } = await cambridgeCrawler(CAMBRIDGE_URL + word)
+    const { examplesText } = await cambridgeCrawler(CAMBRIDGE_URL + word)
     const sentence = examplesText[0].sentence
     const mean = examplesText[0].mean
 
