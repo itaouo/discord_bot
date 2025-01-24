@@ -9,7 +9,7 @@ const randomPickListIndex = (total, count) => {
     }
 
     while (numbers.length < count) {
-        const num = Math.floor(Math.random() * (total + 1))
+        const num = Math.floor(Math.random() * (total))
         if (!numbers.includes(num)) {
             numbers.push(num)
         }
