@@ -48,9 +48,15 @@ client.on('interactionCreate', async (interaction) => {
     let filePath = COMMAND_FOLDER_PATH + command
 
     if (require(filePath).slashCommandName === commandName) {
+      let message = ""
       await interaction.deferReply()
-      let message = await require(filePath).execute(options)
 
+      try{
+        message = await require(filePath).execute(options)
+      } catch (error){
+        message = error.message
+      }
+      
       if (interaction.deferred) {
         await interaction.editReply(message)
       } else {
