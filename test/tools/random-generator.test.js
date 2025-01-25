@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const { randomNum, randomPickListIndex } = require('../../tools/random-generator.js')
 
 test('I want to randomly select three numbers from five numbers.', () => {

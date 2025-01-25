@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const cambridgeCrawler = require('../../tools/cambridge-crawler.js')
 
 test('I would like to search for the word "contain" from Cambridge.', async () => {

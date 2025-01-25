@@ -1,7 +1,6 @@
 import globals from "globals"
 import pluginJs from "@eslint/js"
 
-
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
@@ -23,5 +22,20 @@ export default [
       "no-unused-vars": "warn",
       semi: ["error", "never"]
     }
+  },
+  {
+    plugins: {
+      jest: pluginJest,
+    },
+    env: {
+      node: true,
+      jest: true,
+    },
+    rules: {
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/valid-expect': 'error',
+    },
   }
 ]
