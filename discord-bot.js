@@ -1,9 +1,20 @@
 const { Client, GatewayIntentBits } = require('discord.js')
+const schedule = require('node-schedule')
 
 require('dotenv').config()
 const LANGUAGE = process.env.LANGUAGE
 const TOKEN = process.env.DISCORD_BOT_TOKEN
 const COMMAND_FOLDER_PATH = process.env.COMMAND_FOLDER_PATH
+const CHANNEL_ID = process.env.CHANNEL_ID
+
+const scheduleWeather = async () => {
+  schedule.scheduleJob({ hour: 22, minute: 0 }, async function() {
+    const channel = client.channels.cache.get(CHANNEL_ID)
+    let options = ""
+    let message = await require(COMMAND_FOLDER_PATH + "weather").execute(options)
+    channel.send("🔔 " + message)
+  })
+}
 
 const { messages } = require(`./keyword/keyword-${LANGUAGE}.json`)
 const loadSlashCommands = require('./slash_command.js')
@@ -27,6 +38,7 @@ client.on('ready', async () => {
   console.log('Bot is online.')
 
   loadSlashCommands()
+  scheduleWeather()
 })
 
 client.on('messageCreate', async msg => {
