@@ -7,7 +7,7 @@ const ai = new GoogleGenerativeAI(GOOGLE_AI_API)
 
 const writePrompt = async (prompt) => {
   const model = ai.getGenerativeModel({ model: "gemini-pro" })
-  const result = await model.generateContent(`use ${PROMPT_LANGUAGE} and answer ${prompt}, thank you.`)
+  const result = await model.generateContent(`after answer ${prompt}, use ${PROMPT_LANGUAGE} say it, thank you.`)
   const response = await result.response
   return response.text()
 }
