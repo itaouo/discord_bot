@@ -1,12 +1,12 @@
 import globals from "globals"
 import pluginJs from "@eslint/js"
+import pluginJest from "eslint-plugin-jest" // <-- Add this line
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
     files: ["**/*.js"],
-    languageOptions: 
-    {
+    languageOptions: {
       sourceType: "commonjs",
       globals: {
         process: "readonly",
@@ -24,12 +24,10 @@ export default [
     }
   },
   {
-    plugins: {
-      jest: pluginJest,
-    },
-    env: {
-      node: true,
-      jest: true,
+    files: ['**/*.spec.js', '**/*.test.js'],
+    plugins: { jest: pluginJest },
+    languageOptions: {
+      globals: pluginJest.environments.globals.globals,
     },
     rules: {
       'jest/no-disabled-tests': 'warn',

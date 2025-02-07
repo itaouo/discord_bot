@@ -32,7 +32,7 @@ const execute = async (options) => {
 
   citys.push(spot)
   if(!await writeFile(WEATHER_SPOTS_SAVE, listToString(citys))) { return '保存紀錄失敗！'}
-  return `新增 ${spot} 成功鴨`
+  return `新增 ${spot} 成功`
 }
 
 const isLocationInWeatherAPI = async (city) => {

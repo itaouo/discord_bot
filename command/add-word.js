@@ -28,7 +28,7 @@ const execute = async (options) => {
 
   words.push(word)
   if(!await writeFile(ENGLISH_WORDS_SAVE, listToString(words))) { return '保存紀錄失敗！'}
-  return `新增 ${word} 成功鴨`
+  return `新增 ${word} 成功`
 }
 
 module.exports =  { slashCommandName, slashCommand, execute }

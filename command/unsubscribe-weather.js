@@ -27,7 +27,7 @@ const execute = async (options) => {
 
   citys.pop(spot)
   if(await !writeFile(WEATHER_SPOTS_SAVE, listToString(citys))) { return '保存紀錄失敗！'}
-  return `刪除 ${spot} 成功鴨`
+  return `刪除 ${spot} 成功`
 }
 
 module.exports =  { slashCommandName, slashCommand, execute }
