@@ -4,7 +4,7 @@ require('dotenv').config()
 const WEATHER_URL = process.env.WEATHER_URL
 const WEATHER_SPOTS_SAVE = process.env.WEATHER_SPOTS_SAVE
 
-const { readFile, stringToList } = require('../tools/file-handler.js')
+const { readFile, stringToList } = require('./file-handler.js')
 
 const weatherParser = async () => {
     let citys = await stringToList(await readFile(WEATHER_SPOTS_SAVE))

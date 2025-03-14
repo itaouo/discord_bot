@@ -13,14 +13,14 @@ app.get('/healthz', (req, res) => {
 })
 
 app.listen(PORT, () => {
-	console.log("Start Server")
+	console.log("Start Servers")
 	setInterval(() => {
 		let mUsage = process.memoryUsage()
         let memorySum = mUsage.rss + mUsage.heapUsed + mUsage.heapTotal + mUsage.external + mUsage.arrayBuffers
 		let memoryMB = (memorySum/(1024*1024)).toFixed(2) + " MB"
 		console.log(`Live...${memoryMB} ` + new Date())
 		// eslint-disable-next-line no-undef
-		gc()
+		// gc()
 	}, 60000)
 })
 

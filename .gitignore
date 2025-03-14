@@ -1,5 +1,8 @@
-/node_modules
-/output
+/backend/node_modules
+/frontend/node_modules
+/backend/main/output
+/frontend/output
 
 *.env
 *dockerignore
+*.sqlite
