@@ -17,8 +17,8 @@ const scheduleWeather = async () => {
 }
 
 const { messages } = require(`./keyword/keyword-${LANGUAGE}.json`)
-const loadSlashCommands = require('./slash_command.js')
-const { listAllCommands } = require('./tools/file-handler.js')
+const loadSlashCommands = require('./slash-command.js')
+const { listAllCommands } = require('../backend/main/tools/file-handler.js')
 
 const client = new Client({
 intents:

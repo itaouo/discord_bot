@@ -13,7 +13,7 @@ app.get('/healthz', (req, res) => {
 })
 
 app.listen(PORT, () => {
-	console.log("Start Server")
+	console.log("Start Servers")
 	setInterval(() => {
 		let mUsage = process.memoryUsage()
         let memorySum = mUsage.rss + mUsage.heapUsed + mUsage.heapTotal + mUsage.external + mUsage.arrayBuffers
