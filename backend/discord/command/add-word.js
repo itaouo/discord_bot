@@ -1,6 +1,4 @@
-const slashCommandName = 'add_word'
-
-const slashCommand = () => {
+module.exports = () => {
   return {
     name: 'add_word',
     description: '新增單字至題庫內',
@@ -14,5 +12,3 @@ const slashCommand = () => {
     ]
   }
 }
-
-module.exports =  { slashCommandName, slashCommand }

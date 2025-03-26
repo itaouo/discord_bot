@@ -1,6 +1,4 @@
-const slashCommandName = 'unsubscribe_weather'
-
-const slashCommand = () => {
+module.exports = () => {
   return {
       name: 'unsubscribe_weather',
       description: '取消天氣預報地點',
@@ -14,5 +12,3 @@ const slashCommand = () => {
       ]
   }
 }
-
-module.exports =  { slashCommandName, slashCommand }

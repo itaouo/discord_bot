@@ -1,6 +1,4 @@
-const slashCommandName = 'qa_sentences_translate'
-
-const slashCommand = () => {
+module.exports = () => {
     return {
         name: 'qa_sentences_translate',
         description: '從題庫內的單字出例句翻譯題（預設 3 題）',
@@ -14,5 +12,3 @@ const slashCommand = () => {
         ]
     }
 }
-
-module.exports =  { slashCommandName, slashCommand }

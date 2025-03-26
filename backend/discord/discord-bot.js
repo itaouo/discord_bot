@@ -61,7 +61,7 @@ client.on('interactionCreate', async (interaction) => {
     let filePath = COMMAND_FOLDER_PATH + command
     let commandPath = MAIN_PATH + command
 
-    if (require(filePath).slashCommandName === commandName) {
+    if (require(filePath)().name === commandName) {
       let message = ""
       await interaction.deferReply()
 

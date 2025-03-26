@@ -15,7 +15,7 @@ const slashCommands = async () =>
 
   commands.forEach(async command => {
     let filePath = COMMAND_FOLDER_PATH + command
-    result.push(await require(filePath).slashCommand())
+    result.push(await require(filePath)())
   })
   return result  
 }

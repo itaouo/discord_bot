@@ -1,6 +1,4 @@
-const slashCommandName = 'subscribe_weather'
-
-const slashCommand = () => {
+module.exports = () => {
   return {
     name: 'subscribe_weather',
     description: '新增天氣預報地點',
@@ -14,5 +12,3 @@ const slashCommand = () => {
     ]
   }
 }
-
-module.exports =  { slashCommandName, slashCommand }

@@ -1,6 +1,4 @@
-const slashCommandName = 'word_search'
-
-const slashCommand = () => {
+module.exports = () => {
     return {
         name: 'word_search',
         description: '寫出英文單字對應的翻譯和例句',
@@ -14,5 +12,3 @@ const slashCommand = () => {
         ]
     }
 }
-
-module.exports =  { slashCommandName, slashCommand }

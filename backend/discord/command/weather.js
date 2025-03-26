@@ -1,10 +1,6 @@
-const slashCommandName = 'weather'
-
-const slashCommand = () => {
+module.exports = () => {
     return {
         name: 'weather',
         description: '明日天氣預報',
     }
 }
-
-module.exports =  { slashCommandName, slashCommand }

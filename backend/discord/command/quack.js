@@ -1,10 +1,6 @@
-const slashCommandName = 'quack'
-
-const slashCommand = () => {
+module.exports = () => {
     return {
         name: 'quack',
         description: '呱',
     }
 }
-
-module.exports =  { slashCommandName, slashCommand }

@@ -1,6 +1,4 @@
-const slashCommandName = 'ai'
-
-const slashCommand = () => {
+module.exports = slashCommand = () => {
   return {
     name: 'ai',
     description: '問 AI 一個問題',
@@ -14,5 +12,3 @@ const slashCommand = () => {
     ]
   }
 }
-
-module.exports =  { slashCommandName, slashCommand }
