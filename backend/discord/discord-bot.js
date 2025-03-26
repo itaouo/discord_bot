@@ -6,6 +6,7 @@ const LANGUAGE = process.env.LANGUAGE
 const TOKEN = process.env.DISCORD_BOT_TOKEN
 const COMMAND_FOLDER_PATH = process.env.COMMAND_FOLDER_PATH
 const CHANNEL_ID = process.env.CHANNEL_ID
+const MAIN_PATH = process.env.MAIN_PATH
 
 const scheduleWeather = async () => {
   schedule.scheduleJob({ hour: 22, minute: 0 }, async function() {
@@ -18,7 +19,7 @@ const scheduleWeather = async () => {
 
 const { messages } = require(`./keyword/keyword-${LANGUAGE}.json`)
 const loadSlashCommands = require('./slash-command.js')
-const { listAllCommands } = require('../backend/main/tools/file-handler.js')
+const { listAllCommands } = require('../main/tools/file-handler.js')
 
 const client = new Client({
 intents:
@@ -58,13 +59,14 @@ client.on('interactionCreate', async (interaction) => {
 
   commands.forEach(async command => {
     let filePath = COMMAND_FOLDER_PATH + command
+    let commandPath = MAIN_PATH + command
 
     if (require(filePath).slashCommandName === commandName) {
       let message = ""
       await interaction.deferReply()
 
       try{
-        message = await require(filePath).execute(options)
+        message = await require(commandPath).execute(options)
       } catch (error){
         message = error.message
       }

@@ -7,8 +7,4 @@ const slashCommand = () => {
     }
 }
 
-const execute = (options) => {
-    return "呱！"
-}
-
-module.exports =  { slashCommandName, slashCommand, execute }
+module.exports =  { slashCommandName, slashCommand }

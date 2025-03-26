@@ -6,7 +6,7 @@ const CLIENT_ID = process.env.CLIENT_ID
 const GUILD_ID = process.env.GUILD_ID
 const COMMAND_FOLDER_PATH = process.env.COMMAND_FOLDER_PATH
 
-const { listAllCommands } = require('../backend/main/tools/file-handler.js')
+const { listAllCommands } = require('../main/tools/file-handler.js')
 
 const slashCommands = async () => 
 {

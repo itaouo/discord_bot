@@ -1,5 +1,3 @@
-const writePrompt = require('../../backend/main/tools/google-generative-ai.js')
-
 const slashCommandName = 'ai'
 
 const slashCommand = () => {
@@ -17,8 +15,4 @@ const slashCommand = () => {
   }
 }
 
-const execute = async (options) => {
-    return await writePrompt(options.getString('prompt'))
-}
-
-module.exports =  { slashCommandName, slashCommand, execute }
+module.exports =  { slashCommandName, slashCommand }
