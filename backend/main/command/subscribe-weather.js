@@ -6,24 +6,7 @@ const WEATHER_SPOTS_SAVE = process.env.WEATHER_SPOTS_SAVE
 
 const { writeFile, readFile, listToString, stringToList } = require('../tools/file-handler.js')
 
-const slashCommandName = 'subscribe_weather'
-
-const slashCommand = () => {
-  return {
-    name: 'subscribe_weather',
-    description: '新增天氣預報地點',
-    options: [
-        {
-        name: 'spot',
-        type: 3,
-        description: '地點',
-        required: true,
-        },
-    ]
-  }
-}
-
-const execute = async (options) => {
+module.exports = async (options) => {
   let spot = options.getString('spot')
   let citys = await stringToList(await readFile(WEATHER_SPOTS_SAVE))
 
@@ -47,5 +30,3 @@ const isLocationInWeatherAPI = async (city) => {
   }
   return false
 }
-
-module.exports =  { slashCommandName, slashCommand, execute }

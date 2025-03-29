@@ -66,7 +66,7 @@ client.on('interactionCreate', async (interaction) => {
       await interaction.deferReply()
 
       try{
-        message = await require(commandPath).execute(options)
+        message = await require(commandPath)(options)
       } catch (error){
         message = error.message
       }

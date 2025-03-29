@@ -1,16 +1,7 @@
 const writePrompt = require('../tools/google-generative-ai.js')
 const weatherParser = require('../tools/weather-parser.js')
 
-const slashCommandName = 'ai_ootd'
-
-const slashCommand = () => {
-    return {
-        name: 'ai_ootd',
-        description: '用 AI 幫你預測明日穿著',
-    }
-}
-
-const execute = async (options) => {
+module.exports = async (options) => {
     let content = ""
     
     const datas = await weatherParser()
@@ -23,5 +14,3 @@ const execute = async (options) => {
     }
     return content
 }
-
-module.exports =  { slashCommandName, slashCommand, execute }

@@ -3,24 +3,7 @@ const ENGLISH_WORDS_SAVE = process.env.ENGLISH_WORDS_SAVE
 
 const { writeFile, readFile, listToString, stringToList } = require('../tools/file-handler.js')
 
-const slashCommandName = 'add_word'
-
-const slashCommand = () => {
-  return {
-    name: 'add_word',
-    description: '新增單字至題庫內',
-    options: [
-        {
-        name: 'word',
-        type: 3,
-        description: '單字',
-        required: true,
-        },
-    ]
-  }
-}
-
-const execute = async (options) => {
+module.exports =  async (options) => {
   let word = options.getString('word')
   let words = await stringToList(await readFile(ENGLISH_WORDS_SAVE))
 
@@ -30,5 +13,3 @@ const execute = async (options) => {
   if(!await writeFile(ENGLISH_WORDS_SAVE, listToString(words))) { return '保存紀錄失敗！'}
   return `新增 ${word} 成功`
 }
-
-module.exports =  { slashCommandName, slashCommand, execute }

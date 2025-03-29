@@ -1,5 +1,0 @@
-add
-delete
-create
-interaction
-consist

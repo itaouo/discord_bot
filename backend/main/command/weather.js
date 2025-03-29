@@ -1,15 +1,6 @@
 const weatherParser = require('../tools/weather-parser.js')
 
-const slashCommandName = 'weather'
-
-const slashCommand = () => {
-    return {
-        name: 'weather',
-        description: '明日天氣預報',
-    }
-}
-
-const execute = async (options) => {
+module.exports = async (options) => {
     
     let content = ""
     
@@ -25,5 +16,3 @@ const execute = async (options) => {
     
     return content
 }
-
-module.exports =  { slashCommandName, slashCommand, execute }
