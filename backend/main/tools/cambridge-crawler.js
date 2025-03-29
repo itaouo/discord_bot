@@ -1,59 +1,42 @@
+require('dotenv').config()
+const CAMBRIDGE_URL = process.env.CAMBRIDGE_URL
+
 const puppeteer = require('puppeteer')
 
-const cambridgeCrawler = async (url) => {
-    let browser = null
-    let page = null
-    try {
-        browser = await puppeteer.launch()
+module.exports = async (word) => {
+  const browser = await puppeteer.launch({ headless: true })
+  const page = await browser.newPage()
+  const url = CAMBRIDGE_URL + word
+  await page.goto(url, { waitUntil: 'domcontentloaded' })
 
-        page = await browser.newPage()
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
-        await page.goto(url, { waitUntil: 'domcontentloaded' })
-    } catch (error) {
-        await browser.close()
-        console.log("CambridgeCrawler load page failed: " + error)
-        throw new Error("載入英漢字典的時候發生錯誤！")
-    }
+  const extractedData = await page.evaluate(() => {
+    const definitions = []
 
-    try {
-        await page.evaluate(() => {
-            document.querySelector('span.hw.dhw').innerText.trim()
-        })
-    } catch (error) {
-        await browser.close()
-        console.log("The dictionary doesn't have this word: " + error.message)
-        throw new Error("單字不在英漢字典裡！")
-    }
-    
-    try {
-        const wordText = await page.evaluate(() => {
-            return document.querySelector('span.hw.dhw').innerText.trim()
-        })
-        
-        const classText = await page.evaluate(() => {
-            return document.querySelector('span.pos.dpos').innerText.trim()
-        })
+    const outerPartOfSpeech = document.querySelector('.pos.dpos')?.textContent.trim() || ''
+    const definitionBlocks = document.querySelectorAll('.dsense')
 
-        const meanText = await page.evaluate(() => {
-            return document.querySelector('span.trans.dtrans.dtrans-se.break-cj').innerText.trim()
-        })
+    definitionBlocks.forEach(block => {
+      const definitionText = block.querySelector('.def.ddef_d.db')?.textContent.trim() || ''
+      const partOfSpeech = block.querySelector('.pos.dsense_pos')?.textContent.trim() || outerPartOfSpeech
+      const definitionTranslate = block.querySelector('.trans.dtrans-se')?.textContent.trim() || ''
 
-        const examplesText = await page.evaluate(() => {
-            const examples = document.querySelectorAll('div.examp.dexamp')
-            return Array.from(examples).map(example => {
-                const sentence = example.querySelector('span.eg.deg').innerText.trim()
-                const mean = example.querySelector('span.trans.dtrans.dtrans-se.break-cj').innerText.trim()
-                return { sentence, mean }
-            })
-        })
+      const examples = Array.from(block.querySelectorAll('.examp.dexamp')).map(example => {
+        const sentence = example.querySelector('.eg.deg')?.textContent.trim() || ''
+        const sentenceTranslate = example.querySelector('.trans.dtrans-se')?.textContent.trim() || ''
+        return { sentence, sentenceTranslate: sentenceTranslate }
+      })
 
-        await browser.close()
-        return { wordText, classText, meanText, examplesText }
-    } catch (error) {
-        await browser.close()
-        console.log('cambridgeCrawler analysis page failed:', error.message)
-        throw new Error("網站解析格式的時候發生錯誤！")
-    }
+      definitions.push({
+        definition: definitionText,
+        partOfSpeech: partOfSpeech,
+        definitionTranslate: definitionTranslate,
+        examples: examples
+      })
+    })
+
+    return definitions
+  })
+
+  await browser.close()
+  return extractedData
 }
-
-module.exports = cambridgeCrawler

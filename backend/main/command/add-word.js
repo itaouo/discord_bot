@@ -1,15 +1,31 @@
-require('dotenv').config() 
-const ENGLISH_WORDS_SAVE = process.env.ENGLISH_WORDS_SAVE
+const { fetchWords, insertWordData } = require('../tools/mysql-vocabularies.js')
+const cambridgeCrawler = require('../tools/cambridge-crawler.js')
 
-const { writeFile, readFile, listToString, stringToList } = require('../tools/file-handler.js')
+const parse = (word, data) => {
+  const familiarity = 5
+  data.forEach(item => {
+    const partOfSpeech = item.partOfSpeech
+    const definition = item.definition
+    const definitionTranslate = item.definitionTranslate
+    item.examples.forEach(example => {
+      const sentence = example.sentence
+      const sentenceTranslate = example.sentenceTranslate
+      insertWordData(word, partOfSpeech, definition, definitionTranslate, sentence, sentenceTranslate, familiarity)
+    })
+  })
+}
 
-module.exports =  async (options) => {
+module.exports = async (options) => {
   let word = options.getString('word')
-  let words = await stringToList(await readFile(ENGLISH_WORDS_SAVE))
+  let words = await fetchWords()
+  if (words.includes(word)) { return `${word} 單字已經儲存過！` }
 
-  if (words.includes(word)) { return '單字已經儲存過！' }
+  const result = await cambridgeCrawler(word)
+  if (result.length === 0) { return `${word} 單字不在英漢字典裡！`}
+  
+  setTimeout(() => {
+    parse(word, result)
+  }, 100)
 
-  words.push(word)
-  if(!await writeFile(ENGLISH_WORDS_SAVE, listToString(words))) { return '保存紀錄失敗！'}
-  return `新增 ${word} 成功`
+  return `新增 ${word} 單字成功`
 }
